@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmy.dao.RoleMenuMapper">
+    <select id="getMenuId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select menuId from roleMenu where role_id=#{roleId}
+    </select>
+    <select id="getMenuId1" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select menuId from roleMenu where role_id=#{roleId}
+    </select>
+
+    <select id="getRoleCodeList" parameterType="java.lang.Integer" resultType="java.lang.String">
+        select userRole.code from userRole inner join roleMenu
+        on userRole.role_id = roleMenu.role_id
+        where roleMenu.menuId=#{menuId};
+    </select>
+</mapper>

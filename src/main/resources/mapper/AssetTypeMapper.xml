@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmy.dao.AssetTypeMapper">
+    <resultMap id="assetTypeMap" type="com.cmy.pojo.AssetType">
+        <id column="id" property="id"/>
+        <result column="asset_type" property="assetType"/>
+        <result column="pid" property="pid"/>
+        <collection column="id" property="children" select="selectsById"/>
+    </resultMap>
+    <select id="getType" resultMap="assetTypeMap">
+        SELECT * from assets_type where pid=0 and is_delete=0;
+    </select>
+    <select id="selectsById" parameterType="java.lang.Integer" resultMap="assetTypeMap">
+        select * from assets_type where pid=#{id} and is_delete=0
+    </select>
+
+<!--    包括已被删除的资产类型-->
+    <resultMap id="assetAllTypeMap" type="com.cmy.pojo.AssetType">
+        <id column="id" property="id"/>
+        <result column="asset_type" property="assetType"/>
+        <result column="pid" property="pid"/>
+        <collection column="id" property="children" select="selectAllById"/>
+    </resultMap>
+    <select id="getAllType" resultMap="assetAllTypeMap">
+        SELECT * from assets_type where pid=0;
+    </select>
+    <select id="selectAllById" parameterType="java.lang.Integer" resultMap="assetAllTypeMap">
+        select * from assets_type where pid=#{id}
+    </select>
+</mapper>

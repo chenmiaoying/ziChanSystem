@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmy.dao.UserRoleMapper">
+    <select id="getRoleIdByRole" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT role_id FROM userRole where userRole = #{userRole}
+    </select>
+    <select id="getRoles" resultType="com.cmy.pojo.UserRole">
+        SELECT role_id,userRole,roleName FROM userRole;
+    </select>
+</mapper>

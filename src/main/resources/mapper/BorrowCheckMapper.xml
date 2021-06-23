@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmy.dao.BorrowCheckMapper">
+    <resultMap id="toDoBorrowMap" type="com.cmy.pojo.ToDoList">
+        <result column="action1" property="action"/>
+        <result column="apply_time" property="time"/>
+    </resultMap>
+    <select id="getToDoList0" resultMap="toDoBorrowMap" parameterType="java.lang.String">
+        SELECT action1,apply_time FROM borrowCheck where status = 0 and check_id=#{user_Id}
+    </select>
+
+    <resultMap id="toDoMapBorrow5" type="com.cmy.pojo.ToDoList" >
+        <result column="action1" property="action"/>
+        <result column="back_time" property="time"/>
+    </resultMap>
+    <select id="getToDoList5" resultMap="toDoMapBorrow5" parameterType="java.lang.String">
+        SELECT action1,back_time FROM borrowCheck where status = 5 and check_id=#{user_Id}
+    </select>
+    <resultMap id="toDoBorrowMap4" type="com.cmy.pojo.ToDoList">
+        <result column="action1" property="action"/>
+        <result column="exp_return_time" property="time"/>
+    </resultMap>
+    <select id="getToDoList4" resultMap="toDoBorrowMap4" parameterType="java.lang.String">
+        SELECT action1,exp_return_time FROM borrowCheck where status = 4 and start_id=#{user_Id}
+    </select>
+
+</mapper>

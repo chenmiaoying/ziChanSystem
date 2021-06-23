@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmy.dao.PointMapper">
+    <resultMap id="assetPointMap" type="com.cmy.pojo.Point">
+        <id column="id" property="id"/>
+        <result column="pointName" property="pointName"/>
+        <result column="pid" property="pid"/>
+        <collection column="id" property="children" select="selectsByPid"/>
+    </resultMap>
+    <select id="getPoint" resultMap="assetPointMap">
+        SELECT * from assets_point where pid=0 and is_delete=0;
+    </select>
+    <select id="selectsByPid" parameterType="java.lang.Integer" resultMap="assetPointMap">
+        select * from assets_point where pid=#{id} and is_delete=0
+    </select>
+
+    <resultMap id="assetAllPointMap" type="com.cmy.pojo.Point">
+        <id column="id" property="id"/>
+        <result column="pointName" property="pointName"/>
+        <result column="pid" property="pid"/>
+        <collection column="id" property="children" select="selectsAllByPid"/>
+    </resultMap>
+    <select id="getAllPoint" resultMap="assetAllPointMap">
+        SELECT * from assets_point where pid=0;
+    </select>
+    <select id="selectsAllByPid" parameterType="java.lang.Integer" resultMap="assetAllPointMap">
+        select * from assets_point where pid=#{id}
+    </select>
+
+</mapper>

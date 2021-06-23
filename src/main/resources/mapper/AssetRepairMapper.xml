@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmy.dao.AssetRepairMapper">
+    <resultMap id="toDoRepairMap" type="com.cmy.pojo.ToDoList">
+        <result column="repair_Info" property="action"/>
+        <result column="create_time" property="time"/>
+    </resultMap>
+    <select id="getToDoList1" resultMap="toDoRepairMap">
+        SELECT repair_Info,create_time FROM asset_repair where status = 1
+    </select>
+    <resultMap id="toDoRepairMap1" type="com.cmy.pojo.ToDoList">
+        <result column="action1" property="action"/>
+        <result column="create_time" property="time"/>
+    </resultMap>
+    <select id="getToDoList3" resultMap="toDoRepairMap1">
+        SELECT action1,create_time FROM asset_repair where status = 3 and accept_id=#{userId}
+    </select>
+</mapper>

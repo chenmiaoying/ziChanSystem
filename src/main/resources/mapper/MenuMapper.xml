@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmy.dao.MenuMapper">
+<!--    根据角色Id查找该角色对应的菜单-->
+    <!-- 查找一级菜单 -->
+    <!-- 先查询菜单根级目录 -->
+    <!-- 这里的返回结果必须为resultMap，并且值为上面构建的resultMap的id的值 -->
+    <select id="selectParentByRoleId" resultType="com.cmy.pojo.Menu" parameterType="java.lang.Integer">
+		select menu.* from menu inner join roleMenu
+        on menu.menuId = roleMenu.menuId
+        where roleMenu.role_id=#{roleId} and menu.parentId = 0 order by menu.menuId
+	</select>
+
+    <!-- 查询二级菜单 -->
+    <select id="selectChild" resultType="com.cmy.pojo.Menu">
+        select menu.* from menu inner join roleMenu
+        on menu.menuId = roleMenu.menuId
+        where roleMenu.role_id=#{roleId} and parentId = #{parentId} order by menu.menuId
+	</select>
+    <!-- 查询二级菜单下的功能控制 -->
+    <select id="selectChildChild" resultType="com.cmy.pojo.Menu">
+        select menu.* from menu inner join roleMenu
+        on menu.menuId = roleMenu.menuId
+        where roleMenu.role_id=#{roleId} and parentId = #{parentId} order by menu.menuId
+	</select>
+
+<!--    得到全部菜单信息-->
+    <resultMap id="menusMap" type="com.cmy.pojo.Menu">
+        <id column="menuId" property="menuId"/>
+        <result column="menuIcon" property="menuIcon"/>
+        <result column="menuLabel" property="menuLabel"/>
+        <result column="menuUrl" property="menuUrl"/>
+        <result column="method_type" property="methodType"/>
+        <result column="parentId" property="parentId"/>
+
+        <collection property="children" column="menuId" select="selectAllChild"/>
+    </resultMap>
+    <select id="getAllMenus" resultMap="menusMap" parameterType="java.lang.Integer">
+		select * from menu where menu.parentId = 0 order by menu.menuId
+	</select>
+    <select id="selectAllChild" resultMap="menusMap" parameterType="java.lang.Integer">
+        select * from menu where menu.parentId = #{menuId} order by menu.menuId
+    </select>
+</mapper>

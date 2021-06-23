@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmy.dao.UserInfoMapper">
+    <resultMap id="toDoUserInfoMap" type="com.cmy.pojo.ToDoList">
+        <result column="action1" property="action"/>
+        <result column="apply_time" property="time"/>
+    </resultMap>
+    <select id="getToDoList0" resultMap="toDoUserInfoMap">
+        SELECT action1,apply_time FROM userInfo where is_user = 0
+    </select>
+</mapper>

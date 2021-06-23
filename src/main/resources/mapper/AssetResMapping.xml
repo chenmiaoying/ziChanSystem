@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmy.dao.AssetResMapping">
+    <resultMap id="assetNameMap" type="com.cmy.pojo.AssetRes">
+        <result property="value1" column="asset_type"/>
+        <collection property="assetName" column="asset_type" ofType="com.cmy.pojo.AssetRes" select="selectNameByType"/>
+    </resultMap>
+    <select id="getName" resultMap="assetNameMap">
+        SELECT DISTINCT asset_type from asset_info ;
+    </select>
+    <select id="selectNameByType" parameterType="java.lang.String" resultType="com.cmy.pojo.AssetRes">
+        select asset_name as value1 from asset_info where asset_type=#{asset_type}
+    </select>
+</mapper>
